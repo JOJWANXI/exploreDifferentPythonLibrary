@@ -1,0 +1,22 @@
+import json
+
+# Load the JSON data, converting the JSON formatted data into a Python dictionary-dicta
+with open("github_advisories.json", "r") as f:
+    dicta = json.load(f)
+    
+# Count the occurrences of each CWE
+cwe_counts = {}
+    # dicta.items(): returns an iterable view object of the key-value pairs in a dictionary
+    # each element: a tuple [("key/cwe", values/reports)]
+    # identifier cwe; reports: the list of dictionaries
+for cwe, reports in dicta.items():
+    cwe_counts[cwe] = len(reports)
+
+# Print the top 10 CWEs
+top_cwes = sorted(cwe_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+for cwe, count in top_cwes:
+    print(f"{cwe}: {count} reports")
+
+# # Save the dictionary to a new file in JSON format
+# with open("saved_advisories.json", "w") as outfile:
+#     json.dump(dicta, outfile, indent=4)
